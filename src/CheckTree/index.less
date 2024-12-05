@@ -1,0 +1,34 @@
+// 父未选中，子选中不全样式
+.custom-tree {
+  .ant-tree-title {
+    .keyword {
+      color: #e06666;
+    }
+  }
+  // 选中样式
+  .ant-tree-checkbox-checked .ant-tree-checkbox-inner::after {
+    border-width: 3px;
+  }
+
+  // 背景灰色-当前没选中，子节点未全选
+  .half-un-check {
+    .ant-tree-checkbox-inner {
+      background-color: #edebeb;
+    }
+
+    .ant-tree-checkbox-inner::after {
+      display: none;
+    }
+  }
+
+  //背景灰色加对勾-当前选中，子节点未全选）
+  .half-check {
+    .ant-tree-checkbox-inner {
+      background-color: #edebeb;
+      border-color: #d9d9d9;
+    }
+    .ant-tree-checkbox-inner::after {
+      border-color: #1484ff;
+    }
+  }
+}
