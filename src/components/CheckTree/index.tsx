@@ -6,7 +6,7 @@ import type { DataNode } from "antd/lib/tree";
 import { isArray, isEmpty } from "lodash";
 
 import type { CheckBoxType, SearchConfig } from "./data";
-import { filterTree, treeMap, treeToList } from "@/src/utils/TreeHelper";
+import TreeHelper from "@/src/utils/TreeHelper";
 import "./index.less";
 
 // 3个状态选择，1.未选中 2.选中 3.半勾选（两种状态，1--背景灰色-当前没选中，子节点未全选； 2--背景灰色加对勾-当前选中，子节点未全选）
@@ -43,7 +43,7 @@ const CheckTree: React.FC<CheckTreeProps> = props => {
     // 1. 选中节点
     const curNodeChildKeys =
       (curNode?.children || [])?.length > 0
-        ? treeToList(curNode.children).map((it: DataNode) => it.key)
+        ? TreeHelper.treeToList(curNode.children).map((it: DataNode) => it.key)
         : [];
     const curSelKeys = [curNode.key, ...curNodeChildKeys]; // 当前应该选中的keys
     let selectKeys = [...checkKeys, ...curSelKeys];
@@ -139,7 +139,7 @@ const CheckTree: React.FC<CheckTreeProps> = props => {
 
   // 改变展示的数据
   const changeTreeData = (data: DataNode[], type: "keyword" | "checked") => {
-    const list = treeMap(data, {
+    const list = TreeHelper.treeMap(data, {
       conversion: (node: DataNode) => {
         const { title, key } = node;
         let changeVal = {};
@@ -169,9 +169,9 @@ const CheckTree: React.FC<CheckTreeProps> = props => {
           const hasChild = (node?.children || []).length > 0;
           if (hasChild) {
             const isNodeCheck = checkKeys.includes(key),
-              curNodeAllChildKeys: Key[] = treeToList(node.children).map(
-                (it: DataNode) => it.key
-              ),
+              curNodeAllChildKeys: Key[] = TreeHelper.treeToList(
+                node.children
+              ).map((it: DataNode) => it.key),
               isChildAllSelect = curNodeAllChildKeys.every(curKey =>
                 checkKeys.includes(curKey)
               ),
@@ -222,12 +222,12 @@ const CheckTree: React.FC<CheckTreeProps> = props => {
     }
     setAutoExpandParent(true);
     // 搜索数据结果
-    const searchNodes = filterTree(props?.treeData, node => {
+    const searchNodes = TreeHelper.filterTree(props?.treeData, node => {
       return (node.title as string)?.indexOf(keyWord) > -1;
     });
     setShowDeptData(changeTreeData(searchNodes, "keyword"));
     // 搜索后默认展开的节点
-    const expandKeys = treeToList(searchNodes).map(
+    const expandKeys = TreeHelper.treeToList(searchNodes).map(
       (item: DataNode) => item.key
     );
     setExpandedKeys(expandKeys);

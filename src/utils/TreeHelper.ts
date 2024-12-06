@@ -8,16 +8,20 @@ interface TreeHelperConfig {
 
 // 默认配置
 const DEFAULT_CONFIG: TreeHelperConfig = {
-  id: 'id',
-  children: 'children',
-  pid: 'pid',
+  id: "id",
+  children: "children",
+  pid: "pid",
 };
 
 // 获取配置。  Object.assign 从一个或多个源对象复制到目标对象
-const getConfig = (config: Partial<TreeHelperConfig>) => Object.assign({}, DEFAULT_CONFIG, config);
+const getConfig = (config: Partial<TreeHelperConfig>) =>
+  Object.assign({}, DEFAULT_CONFIG, config);
 
 // 列表变树
-export function listToTree<T = any>(list: any[], config: Partial<TreeHelperConfig> = {}): T[] {
+function listToTree<T = any>(
+  list: any[],
+  config: Partial<TreeHelperConfig> = {}
+): T[] {
   const conf = getConfig(config) as TreeHelperConfig;
   const nodeMap = new Map();
   const result: T[] = [];
@@ -35,7 +39,10 @@ export function listToTree<T = any>(list: any[], config: Partial<TreeHelperConfi
 }
 
 // 树变列表
-export function treeToList<T = any>(tree: any, config: Partial<TreeHelperConfig> = {}): T {
+function treeToList<T = any>(
+  tree: any,
+  config: Partial<TreeHelperConfig> = {}
+): T {
   const finalConfig = getConfig(config); // 使用新变量存储配置
   const { children } = finalConfig;
   const result: any = [...tree];
@@ -45,10 +52,10 @@ export function treeToList<T = any>(tree: any, config: Partial<TreeHelperConfig>
   }
   return result;
 }
-export function findNode<T = any>(
+function findNode<T = any>(
   tree: any,
   func: Fn<T>,
-  config: Partial<TreeHelperConfig> = {},
+  config: Partial<TreeHelperConfig> = {}
 ): T | null {
   const finalConfig = getConfig(config); // 使用新变量存储配置
   const { children } = finalConfig;
@@ -61,10 +68,10 @@ export function findNode<T = any>(
   return null;
 }
 
-export function findNodeAll<T = any>(
+function findNodeAll<T = any>(
   tree: any,
   func: Fn<T>,
-  config: Partial<TreeHelperConfig> = {},
+  config: Partial<TreeHelperConfig> = {}
 ): T[] {
   const finalConfig = getConfig(config); // 使用新变量存储配置
   const { children } = finalConfig;
@@ -79,10 +86,10 @@ export function findNodeAll<T = any>(
   return result;
 }
 
-export function findPath<T = any>(
+function findPath<T = any>(
   tree: any,
   func: Fn<T>,
-  config: Partial<TreeHelperConfig> = {},
+  config: Partial<TreeHelperConfig> = {}
 ): T | T[] | null {
   const finalConfig = getConfig(config); // 使用新变量存储配置
   const path: T[] = [];
@@ -107,7 +114,11 @@ export function findPath<T = any>(
   return null;
 }
 
-export function findPathAll(tree: any, func: Fn<any>, config: Partial<TreeHelperConfig> = {}) {
+function findPathAll(
+  tree: any,
+  func: Fn<any>,
+  config: Partial<TreeHelperConfig> = {}
+) {
   const finalConfig = getConfig(config); // 使用新变量存储配置
   const path: any[] = [];
   const list = [...tree];
@@ -132,10 +143,10 @@ export function findPathAll(tree: any, func: Fn<any>, config: Partial<TreeHelper
 }
 
 // 筛选树形数据
-export function filterTree<T = any>(
+function filterTree<T = any>(
   tree: T[],
   func: (n: T) => boolean,
-  config: Partial<TreeHelperConfig> = {}, // Partial 将 T 中的所有属性设为可选
+  config: Partial<TreeHelperConfig> = {} // Partial 将 T 中的所有属性设为可选
 ): T[] {
   // 获取配置
   const finalConfig = getConfig(config); // 使用新变量存储配置
@@ -144,7 +155,7 @@ export function filterTree<T = any>(
   function listFilter(list: T[]) {
     return list
       .map((node: any) => ({ ...node }))
-      .filter((node) => {
+      .filter(node => {
         // 递归调用 对含有children项  进行再次调用自身函数 listFilter
         node[children] = node[children] && listFilter(node[children]);
         // 执行传入的回调 func 进行过滤
@@ -156,10 +167,10 @@ export function filterTree<T = any>(
 }
 
 // 遍历树
-export function forEach<T = any>(
+function forEach<T = any>(
   tree: T[],
   func: (n: T) => any,
-  config: Partial<TreeHelperConfig> = {},
+  config: Partial<TreeHelperConfig> = {}
 ): void {
   const finalConfig = getConfig(config); // 使用新变量存储配置
   const list: any[] = [...tree];
@@ -170,7 +181,9 @@ export function forEach<T = any>(
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    children && list[i][children] && list.splice(i + 1, 0, ...list[i][children]);
+    children &&
+      list[i][children] &&
+      list.splice(i + 1, 0, ...list[i][children]);
   }
 }
 
@@ -178,22 +191,26 @@ export function forEach<T = any>(
  * @description: Extract tree specified structure
  * @description: 提取树指定结构
  */
-export function treeMap<T = any>(
+function treeMap<T = any>(
   treeData: T[],
-  opt: { children?: string; conversion: Fn<T> },
+  opt: { children?: string; conversion: Fn<T> }
 ): T[] {
-  return treeData.map((item) => treeMapEach(item, opt));
+  return treeData.map(item => treeMapEach(item, opt));
 }
 
 /**
  * @description: Extract tree specified structure
  * @description: 提取树指定结构
  */
-export function treeMapEach(
+function treeMapEach(
   data: any,
-  { children = 'children', conversion }: { children?: string; conversion: Fn<any> },
+  {
+    children = "children",
+    conversion,
+  }: { children?: string; conversion: Fn<any> }
 ) {
-  const haveChildren = Array.isArray(data[children]) && data[children].length > 0;
+  const haveChildren =
+    Array.isArray(data[children]) && data[children].length > 0;
   const conversionData = conversion(data) || {};
   if (haveChildren) {
     return {
@@ -202,7 +219,7 @@ export function treeMapEach(
         treeMapEach(i, {
           children,
           conversion,
-        }),
+        })
       ),
     };
   } else {
@@ -211,3 +228,15 @@ export function treeMapEach(
     };
   }
 }
+
+export default {
+  treeToList,
+  listToTree,
+  findNode,
+  findNodeAll,
+  findPath,
+  findPathAll,
+  filterTree,
+  forEach,
+  treeMap,
+};
