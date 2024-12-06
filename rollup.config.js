@@ -1,9 +1,11 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import alias from "@rollup/plugin-alias";
 import babel from "rollup-plugin-babel";
 import typescript from "rollup-plugin-typescript2";
 import postcss from "rollup-plugin-postcss";
 import dynamicImportVars from "@rollup/plugin-dynamic-import-vars";
+import path from "path";
 
 export default {
   input: "src/index.ts", // 入口文件
@@ -17,7 +19,9 @@ export default {
   plugins: [
     resolve(),
     commonjs(),
-
+    alias({
+      entries: [{ find: "@/src", replacement: path.resolve(__dirname, "src") }],
+    }),
     typescript({
       tsconfig: "./tsconfig.json",
     }),

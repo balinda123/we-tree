@@ -17,10 +17,12 @@
     "@babel/preset-env": "^7.17.0",
     "@babel/preset-react": "^7.16.7",
     "@emotion/babel-preset-css-prop": "^11.0.0",
+    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-commonjs": "^21.0.0",
     "@rollup/plugin-dynamic-import-vars": "^2.1.5",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@types/lodash": "^4.17.13",
+    "@types/node": "^22.10.1",
     "@types/react": "^17.0.0",
     "antd": "4.24.12",
     "babel-plugin-import": "^1.13.3",
@@ -38,7 +40,6 @@
   "files": [
     "lib"
   ],
-  "dependencies": {},
   "engines": {
     "node": ">=14.21.3"
   },

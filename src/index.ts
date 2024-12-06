@@ -1,5 +1,5 @@
-export { default as CheckTree } from "./CheckTree";
-export type { CheckTreeProps } from "./CheckTree";
-export * from "./CheckTree/treeHelper";
+// 导出组件
+export * from "./components";
 
-export { default as DeptTree } from "./DeptTree";
+// 导出工具类
+export * from "./utils";

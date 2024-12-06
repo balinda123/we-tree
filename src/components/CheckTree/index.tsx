@@ -6,7 +6,7 @@ import type { DataNode } from "antd/lib/tree";
 import { isArray, isEmpty } from "lodash";
 
 import type { CheckBoxType, SearchConfig } from "./data";
-import { filterTree, treeMap, treeToList } from "./treeHelper";
+import { filterTree, treeMap, treeToList } from "@/src/utils/TreeHelper";
 import "./index.less";
 
 // 3个状态选择，1.未选中 2.选中 3.半勾选（两种状态，1--背景灰色-当前没选中，子节点未全选； 2--背景灰色加对勾-当前选中，子节点未全选）

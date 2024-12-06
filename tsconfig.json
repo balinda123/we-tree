@@ -16,7 +16,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true, // 生成 .d.ts 文件
-    "declarationDir": "./lib" // 声明文件输出目录
+    "declarationDir": "./lib", // 声明文件输出目录
+    "paths": {
+      "@/src/*": ["src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "lib"]
