@@ -1,4 +1,4 @@
-# we-tree 组件库
+# mix-tree 组件库
 
 WeTree 是一个基于 React 和 Ant Design 的树形组件库，支持 Typescript，提供了丰富的树形结构组件和树形处理方法类，适用于各种复杂的树形数据展示和操作需求。
 
@@ -11,8 +11,8 @@ WeTree 是一个基于 React 和 Ant Design 的树形组件库，支持 Typescri
 你可以使用 npm 或 yarn 来安装 WeTree 组件库。
 
 ```bash
-npm install we-tree
-yarn add we-tree
+npm install mix-tree
+yarn add mix-tree
 ```
 
 ## 依赖相关库版本支持
@@ -26,7 +26,7 @@ yarn add we-tree
 首先，确保你已经安装了 antd 和 react。然后在你的项目中引入并使用 WeTree 组件。
 
 ```jsx
-import { CheckTree } from "we-tree";
+import { CheckTree } from "mix-tree";
 
 const treeData = [
   {
