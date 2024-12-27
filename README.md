@@ -55,3 +55,11 @@ return <CheckTree treeData={treeData} />;
 CheckTree 是一个基于 antd tree 组件开发的，带半选状态的树组件。
 
 ## API 文档
+
+| 属性名          | 类型                      | 默认值                                             | 描述                                                                         |
+| --------------- | ------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------- |
+| spcialHalfCheck | boolean                   | false                                              | 选择完全受控情况下，是否增加特殊半勾选逻辑；父子不再关联；业务逻辑特殊半选： |
+| openSearch      | boolean                   | false                                              | 是否开启树关键词搜索                                                         |
+| searchConfig    | { placeholder?: string; } | undefined                                          | 搜索配置                                                                     |
+| onCustomCheck   | TreeProps["onCheck"]      | ( checked: { checked: Key[]; halfChecked: Key[]; } | Key[], info: CheckInfo<DataNode>) => void                                    | 自定义选择的一些逻辑 |
+| checkBoxType    | TODO                      |                                                    |                                                                              |
