@@ -1,5 +1,5 @@
 // 导出组件
-export * from "./components";
+export * from "@/src/components";
 
 // 导出树工具类
-export * from "./utils";
+export * from "@/src/utils";

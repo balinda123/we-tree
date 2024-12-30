@@ -14,7 +14,7 @@ export default {
     format: "esm",
     //当入口文件有export时，'umd'格式必须指定name
     //这样，在通过<script>标签引入时，才能通过name访问到export的内容。
-    name: "WeTree",
+    name: "MixTree",
     exports: "named", // 指定导出模式（自动、默认、命名、无）
     preserveModules: true, // 保留模块结构
     preserveModulesRoot: "src", // 将保留的模块放在根级别的此路径下
@@ -40,8 +40,8 @@ export default {
       plugins: ["@babel/plugin-transform-runtime"],
     }),
     postcss({
-      extract: false, // 不提取 CSS 到单独的文件
-      // modules: false, // 是否启用 CSS 模块
+      extract: true, // 不提取 CSS 到单独的文件
+      modules: false, // 是否启用 CSS 模块
       minimize: false, // 是否压缩 CSS
 
       extensions: [".less", ".css"],
@@ -50,11 +50,12 @@ export default {
           "less",
           {
             javascriptEnabled: true,
-            includes: "src",
+            includePaths: [path.resolve(__dirname, "src")],
             // output: "./lib/styles.css",
           },
         ],
       ],
+      inject: false,
     }),
     dynamicImportVars({
       // 配置动态导入变量的解析
