@@ -1,0 +1,33 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm run build
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          # 这里的 NPM_TOKEN 就是你需要在 GitHub Secrets 里配置的变量
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
