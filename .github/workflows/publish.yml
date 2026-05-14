@@ -18,10 +18,10 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm@9
 
       - name: Install dependencies
-        run: pnpm install --ignore-scripts
+        run: pnpm install
 
       - name: Build project
         run: pnpm run build
