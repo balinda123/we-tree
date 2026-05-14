@@ -40,7 +40,7 @@ export default {
       plugins: ["@babel/plugin-transform-runtime"],
     }),
     postcss({
-      extract: true, // 不提取 CSS 到单独的文件
+      extract: false, // 不提取 CSS 到单独的文件
       modules: false, // 是否启用 CSS 模块
       minimize: false, // 是否压缩 CSS
 
@@ -55,7 +55,7 @@ export default {
           },
         ],
       ],
-      inject: false,
+      inject: true,
     }),
     dynamicImportVars({
       // 配置动态导入变量的解析
