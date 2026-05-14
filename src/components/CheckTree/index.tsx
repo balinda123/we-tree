@@ -202,41 +202,38 @@ const CheckTree: React.FC<CheckTreeProps> = props => {
     return list;
   };
 
-  // 初始化显示数据
-  useEffect(() => {
-    if (props?.treeData && !isEmpty(props?.treeData)) {
-      setShowDeptData(props?.treeData);
-    }
-  }, [props?.treeData]);
-
-  // 部门搜索
+  // 综合处理数据流：计算半选样式、处理搜索过滤与高亮
   useEffect(() => {
     if (!props?.treeData) {
       return;
     }
+    
+    // 1. 先在【完整的原始树】上计算半选样式
+    // 必须在完整树上计算，否则搜索过滤掉子节点后，会导致父节点的半选逻辑判断失败（以为自己没有子节点了）
+    let nextData = changeTreeData(props.treeData, "checked");
+
+    // 2. 处理关键字搜索过滤
     if (!keyWord) {
       setAutoExpandParent(false);
-      setShowDeptData(props?.treeData);
-      setExpandedKeys([]);
-      return;
+      // 清空搜索时不强制收缩树，体验更好
+    } else {
+      setAutoExpandParent(true);
+      // 在带有正确样式的树上进行过滤
+      const searchNodes = TreeHelper.filterTree(nextData, node => {
+        return (node.title as string)?.indexOf(keyWord) > -1;
+      });
+      // 附加关键字高亮
+      nextData = changeTreeData(searchNodes, "keyword");
+      
+      // 搜索后默认展开命中节点的父级
+      const expandKeys = TreeHelper.treeToList(searchNodes).map(
+        (item: DataNode) => item.key
+      );
+      setExpandedKeys(expandKeys);
     }
-    setAutoExpandParent(true);
-    // 搜索数据结果
-    const searchNodes = TreeHelper.filterTree(props?.treeData, node => {
-      return (node.title as string)?.indexOf(keyWord) > -1;
-    });
-    setShowDeptData(changeTreeData(searchNodes, "keyword"));
-    // 搜索后默认展开的节点
-    const expandKeys = TreeHelper.treeToList(searchNodes).map(
-      (item: DataNode) => item.key
-    );
-    setExpandedKeys(expandKeys);
-  }, [keyWord]);
-
-  // 监听选中状态变化, 改变半选样式
-  useEffect(() => {
-    setShowDeptData(changeTreeData(showDeptData, "checked"));
-  }, [checkKeys]);
+    
+    setShowDeptData(nextData);
+  }, [keyWord, props?.treeData, checkKeys]);
 
   // 编辑用：初始化显示选中的节点
   useEffect(() => {
